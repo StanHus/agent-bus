@@ -1,0 +1,9 @@
+--- a/agent_base.py
++++ b/agent_base.py
+@@ -461,5 +461,5 @@
+                 steps = req.get("steps", [])
+                 rationale = req.get("rationale", "")
+-                p = self.plan(title, steps, rationale)
++                p = self.plan(title=title, steps=steps, rationale=rationale)
+                 result = {"ok": True, "plan_path": str(p)}
+             elif kind == "invoke_skill":

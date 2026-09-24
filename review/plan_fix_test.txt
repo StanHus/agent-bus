@@ -1,0 +1,6 @@
+test_plan_dispatch_preserves_named_arguments (__main__.AgentBusContractTests.test_plan_dispatch_preserves_named_arguments) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+OK

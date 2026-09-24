@@ -1,0 +1,240 @@
+test_audit_failure_does_not_terminate_run_loop (__main__.AgentBusContractTests.test_audit_failure_does_not_terminate_run_loop) ... ERROR
+test_baseline_idle_exception_still_allows_heartbeat (__main__.AgentBusContractTests.test_baseline_idle_exception_still_allows_heartbeat) ... ok
+test_baseline_open_breaker_heartbeats_without_work (__main__.AgentBusContractTests.test_baseline_open_breaker_heartbeats_without_work) ... ok
+test_baseline_subclass_exception_becomes_error_reply (__main__.AgentBusContractTests.test_baseline_subclass_exception_becomes_error_reply) ... ok
+test_baseline_success_replies_acknowledges_and_heartbeats (__main__.AgentBusContractTests.test_baseline_success_replies_acknowledges_and_heartbeats) ... ok
+test_breaker_stops_batch_at_threshold (__main__.AgentBusContractTests.test_breaker_stops_batch_at_threshold) ... FAIL
+test_builtin_exception_does_not_block_later_work (__main__.AgentBusContractTests.test_builtin_exception_does_not_block_later_work) ... ERROR
+test_caller_cannot_escape_agents_root (__main__.AgentBusContractTests.test_caller_cannot_escape_agents_root) ... FAIL
+test_error_object_does_not_break_circuit_bookkeeping (__main__.AgentBusContractTests.test_error_object_does_not_break_circuit_bookkeeping) ... ERROR
+test_event_id_cannot_escape_outbox (__main__.AgentBusContractTests.test_event_id_cannot_escape_outbox) ... FAIL
+test_heartbeat_is_attempted_after_response_io_failure (__main__.AgentBusContractTests.test_heartbeat_is_attempted_after_response_io_failure) ... FAIL
+test_invalid_handler_result_is_contained (__main__.AgentBusContractTests.test_invalid_handler_result_is_contained) ... ERROR
+test_invalid_skill_arguments_are_rejected_without_aborting_tick (__main__.AgentBusContractTests.test_invalid_skill_arguments_are_rejected_without_aborting_tick) ... ERROR
+test_malformed_json_is_preserved_for_diagnosis (__main__.AgentBusContractTests.test_malformed_json_is_preserved_for_diagnosis) ... FAIL
+test_non_object_json_does_not_block_later_work (__main__.AgentBusContractTests.test_non_object_json_does_not_block_later_work) ... ERROR
+test_ok_must_be_a_boolean_not_a_truthy_string (__main__.AgentBusContractTests.test_ok_must_be_a_boolean_not_a_truthy_string) ... FAIL
+test_plan_dispatch_preserves_named_arguments (__main__.AgentBusContractTests.test_plan_dispatch_preserves_named_arguments) ... FAIL
+test_respawn_is_acknowledged_before_process_exit (__main__.AgentBusContractTests.test_respawn_is_acknowledged_before_process_exit) ... FAIL
+test_response_write_failure_does_not_repeat_side_effect (__main__.AgentBusContractTests.test_response_write_failure_does_not_repeat_side_effect) ... FAIL
+test_result_cannot_override_transport_event_id (__main__.AgentBusContractTests.test_result_cannot_override_transport_event_id) ... FAIL
+test_unlink_failure_does_not_repeat_side_effect (__main__.AgentBusContractTests.test_unlink_failure_does_not_repeat_side_effect) ... FAIL
+
+======================================================================
+ERROR: test_audit_failure_does_not_terminate_run_loop (__main__.AgentBusContractTests.test_audit_failure_does_not_terminate_run_loop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/source_excerpts/agent_base.py", line 84, in run
+    self.tick()
+    ~~~~~~~~~^^
+  File "/usr/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/unittest/mock.py", line 1228, in _execute_mock_call
+    raise effect
+RuntimeError: work failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 283, in test_audit_failure_does_not_terminate_run_loop
+    self.agent.run()
+    ~~~~~~~~~~~~~~^^
+  File "/mnt/data/agent_bus_review/source_excerpts/agent_base.py", line 86, in run
+    audit(self.name, "tick_exception", error=str(e)[:200])
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/unittest/mock.py", line 1228, in _execute_mock_call
+    raise effect
+OSError: audit volume unavailable
+
+======================================================================
+ERROR: test_builtin_exception_does_not_block_later_work (__main__.AgentBusContractTests.test_builtin_exception_does_not_block_later_work)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 185, in test_builtin_exception_does_not_block_later_work
+    self.agent.tick()
+    ~~~~~~~~~~~~~~~^^
+  File "/mnt/data/agent_bus_review/source_excerpts/agent_base.py", line 28, in tick
+    self.dream_sequence()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/unittest/mock.py", line 1228, in _execute_mock_call
+    raise effect
+RuntimeError: dream failed
+
+======================================================================
+ERROR: test_error_object_does_not_break_circuit_bookkeeping (__main__.AgentBusContractTests.test_error_object_does_not_break_circuit_bookkeeping)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 274, in test_error_object_does_not_break_circuit_bookkeeping
+    self.agent.tick()
+    ~~~~~~~~~~~~~~~^^
+  File "/mnt/data/agent_bus_review/source_excerpts/agent_base.py", line 56, in tick
+    self._trip_breaker(f"5+ consecutive handler failures (last: {result.get('error','?')[:100]})")
+                                                                 ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: slice(None, 100, None)
+
+======================================================================
+ERROR: test_invalid_handler_result_is_contained (__main__.AgentBusContractTests.test_invalid_handler_result_is_contained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 201, in test_invalid_handler_result_is_contained
+    self.agent.tick()
+    ~~~~~~~~~~~~~~~^^
+  File "/mnt/data/agent_bus_review/source_excerpts/agent_base.py", line 49, in tick
+    respond(caller, eid, result)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/agent_bus_review/source_excerpts/comms.py", line 38, in respond
+    tmp.write_text(json.dumps({"event_id": event_id, **payload}, default=str))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not a mapping
+
+======================================================================
+ERROR: test_invalid_skill_arguments_are_rejected_without_aborting_tick (__main__.AgentBusContractTests.test_invalid_skill_arguments_are_rejected_without_aborting_tick)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 193, in test_invalid_skill_arguments_are_rejected_without_aborting_tick
+    self.agent.tick()
+    ~~~~~~~~~~~~~~~^^
+  File "/mnt/data/agent_bus_review/source_excerpts/agent_base.py", line 38, in tick
+    result = self.invoke_skill(
+        req.get("skill"),
+        *req.get("args", []),
+        **req.get("kwargs", {}),
+    )
+TypeError: Value after * must be an iterable, not NoneType
+
+======================================================================
+ERROR: test_non_object_json_does_not_block_later_work (__main__.AgentBusContractTests.test_non_object_json_does_not_block_later_work)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 176, in test_non_object_json_does_not_block_later_work
+    self.agent.tick()
+    ~~~~~~~~~~~~~~~^^
+  File "/mnt/data/agent_bus_review/source_excerpts/agent_base.py", line 10, in tick
+    eid = req.get("event_id", f.stem)
+          ^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+
+======================================================================
+FAIL: test_breaker_stops_batch_at_threshold (__main__.AgentBusContractTests.test_breaker_stops_batch_at_threshold)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 170, in test_breaker_stops_batch_at_threshold
+    self.assertEqual(self.agent.handle.call_count, 5)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 8 != 5
+
+======================================================================
+FAIL: test_caller_cannot_escape_agents_root (__main__.AgentBusContractTests.test_caller_cannot_escape_agents_root)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 261, in test_caller_cannot_escape_agents_root
+    self.assertFalse((self.root / "escaped" / "outbox" / "001.json").exists())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_event_id_cannot_escape_outbox (__main__.AgentBusContractTests.test_event_id_cannot_escape_outbox)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 268, in test_event_id_cannot_escape_outbox
+    self.assertFalse((self.comms.AGENTS_ROOT / "client" / "escaped.json").exists())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_heartbeat_is_attempted_after_response_io_failure (__main__.AgentBusContractTests.test_heartbeat_is_attempted_after_response_io_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 242, in test_heartbeat_is_attempted_after_response_io_failure
+    self.heartbeat.assert_called_once()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/unittest/mock.py", line 958, in assert_called_once
+    raise AssertionError(msg)
+AssertionError: Expected 'heartbeat' to have been called once. Called 0 times.
+
+======================================================================
+FAIL: test_malformed_json_is_preserved_for_diagnosis (__main__.AgentBusContractTests.test_malformed_json_is_preserved_for_diagnosis)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 294, in test_malformed_json_is_preserved_for_diagnosis
+    self.assertTrue(preserved, "malformed message was deleted instead of quarantined")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true : malformed message was deleted instead of quarantined
+
+======================================================================
+FAIL: test_ok_must_be_a_boolean_not_a_truthy_string (__main__.AgentBusContractTests.test_ok_must_be_a_boolean_not_a_truthy_string)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 209, in test_ok_must_be_a_boolean_not_a_truthy_string
+    self.assertIs(self.response()["ok"], False)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'false' is not False
+
+======================================================================
+FAIL: test_plan_dispatch_preserves_named_arguments (__main__.AgentBusContractTests.test_plan_dispatch_preserves_named_arguments)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 161, in test_plan_dispatch_preserves_named_arguments
+    self.assertEqual(received.arguments["steps"], ["test", "release"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'safety' != ['test', 'release']
+
+======================================================================
+FAIL: test_respawn_is_acknowledged_before_process_exit (__main__.AgentBusContractTests.test_respawn_is_acknowledged_before_process_exit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 248, in test_respawn_is_acknowledged_before_process_exit
+    self.assertFalse(request.exists(), "same respawn request remains executable after restart")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false : same respawn request remains executable after restart
+
+======================================================================
+FAIL: test_response_write_failure_does_not_repeat_side_effect (__main__.AgentBusContractTests.test_response_write_failure_does_not_repeat_side_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 221, in test_response_write_failure_does_not_repeat_side_effect
+    self.assertEqual(self.agent.handle.call_count, 1, "response retry repeated completed handler")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1 : response retry repeated completed handler
+
+======================================================================
+FAIL: test_result_cannot_override_transport_event_id (__main__.AgentBusContractTests.test_result_cannot_override_transport_event_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 254, in test_result_cannot_override_transport_event_id
+    self.assertEqual(self.response()["event_id"], "001")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'different-request' != '001'
+- different-request
++ 001
+
+
+======================================================================
+FAIL: test_unlink_failure_does_not_repeat_side_effect (__main__.AgentBusContractTests.test_unlink_failure_does_not_repeat_side_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/agent_bus_review/agent_bus_regression_tests.py", line 233, in test_unlink_failure_does_not_repeat_side_effect
+    self.assertEqual(self.agent.handle.call_count, 1, "acknowledgement retry repeated completed handler")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1 : acknowledgement retry repeated completed handler
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.134s
+
+FAILED (failures=11, errors=6)
