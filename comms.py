@@ -1,22 +1,21 @@
 # ============================================================================
-# PUBLIC COPY — the bus that ran a 56-daemon agent fabric (June–Aug 2026)
+# PUBLIC COPY — the bus behind a multi-agent fabric
 # ============================================================================
-# Verbatim from the fabric's shared module (`_shared/comms.py`, private repo
-# StanHus/aptraining-mesh). Only this comment block is new.
+# Verbatim from the fabric's shared module (`_shared/comms.py`, private
+# repo). Only this comment block is new.
 #
-# WHAT IT DID. 56 long-running agents on a Mac mini (curators, evaluators, a
+# WHAT IT DID. Dozens of long-running agents on one machine (curators, evaluators, a
 # training-chain conductor, a token manager, a mesh doctor, a continuity watchdog)
 # talked to each other through this file and nothing else. No broker, no ports,
-# no queue service, no dependencies. Two months, 16,083 messages surfaced to the
-# operator, 47 agents heartbeating at any time. A laptop saw the same bus because
+# no queue service, no dependencies. A second machine saw the same bus because
 # the directory tree lived in iCloud.
 #
 # HOW. A message is a JSON file. Delivery is `write .tmp` then `rename()`, which
 # is atomic on POSIX: a reader sees a whole message or none. A reply is the same
 # file name in the caller's outbox. `send_directive` is therefore synchronous RPC
 # with correlation ids and a timeout, in 22 lines. Chosen by measurement, not
-# taste (header below: p95 0.402 ms, p99 0.508 ms, 100 % success, 50/50 crash
-# survival in the 2026-06-02 shootout against the alternatives).
+# taste: it beat the brokered alternatives on tail latency and crash survival
+# in a head-to-head shootout.
 #
 # FILES IT TALKS TO (private, not in this copy):
 #   agent_base.py      BaseAgent.tick() drains the inbox via drain_inbox() and
@@ -44,8 +43,8 @@ def atomic_write(path, content):
 
 """_shared.comms — canonical localfs_poll inbox/outbox helper.
 
-Winner of comms shootout 2026-06-02: p95 0.402ms / p99 0.508ms / 100% success / 50/50 crash-survival.
-All macmini agents should import from here instead of re-implementing inbox/outbox handling.
+Winner of the comms shootout (latency + crash survival).
+All agents should import from here instead of re-implementing inbox/outbox handling.
 
 Inbox files MUST be valid JSON with {event_id, kind, caller, ...}.
 Outbox files written atomically (write to .tmp, rename).

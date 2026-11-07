@@ -1,29 +1,18 @@
 # agent-bus
 
-Two files that ran a 56-daemon agent fabric for two months on one Mac mini, with no broker,
+Two files that ran a multi-agent fabric of dozens of long-running daemons on one machine, with no broker,
 no framework, and no dependencies beyond the Python standard library.
 
 | File | Lines that matter | What it is |
 |---|---|---|
 | `comms.py` | `atomic_write`, `send_directive`, `drain_inbox`, `respond`, `request_token` | The bus. A message is a JSON file delivered by atomic rename. Request/response with correlation ids and a timeout in 22 lines. |
 | `agent_base.py` | `BaseAgent.tick()` | The loop every agent ran. Inbox, four universal directives, circuit breaker, audit, idle work, dream, heartbeat. |
-
 | `bd.py` | stub | Four no-op functions standing in for the private bead ledger so `agent_base.py` imports standalone. |
 
 ## What it carried
 
-| | |
-|---|---|
-| Long-running daemons | 56 |
-| Agents heartbeating at once | 47 |
-| Messages surfaced to the operator, May 27 to Sep 23 2026 | 16,083 |
-| Shared audit files | 190 |
-| Bus latency in the selection shootout (2026-06-02) | p95 0.402 ms, p99 0.508 ms |
-| Crash survival in that shootout | 50 / 50 |
-| Fine-tuned model versions driven end to end | v92 to v110 |
-
-The work it drove: fine-tuning question generators on Fireworks, judging them against an external
-evaluator, chaining the next run from the result, and refusing to sit idle. The daemons that did that
+The work it drove: continuous model fine-tuning and evaluation loops, where each result chose the next run
+and no agent was allowed to sit idle. The daemons that did that
 (chain conductor, continuity watchdog, token manager, mesh doctor) are private; the two files here are
 what they all had in common.
 
@@ -31,8 +20,8 @@ what they all had in common.
 
 Every alternative brought a process to run, a port to bind, credentials to manage, and a new single
 point of failure. `rename()` is atomic on POSIX, a crashed writer leaves only an orphaned `.tmp`, and a
-directory tree in iCloud made two machines share one bus for free. The shootout was run before the
-choice, and its numbers sit in the module docstring.
+directory tree in iCloud made two machines share one bus for free. The bus won a latency and crash-survival
+shootout against brokered alternatives before it was chosen.
 
 ## Run
 

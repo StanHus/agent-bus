@@ -1,7 +1,7 @@
 # ============================================================================
 # PUBLIC COPY — the loop every agent in the fabric ran
 # ============================================================================
-# Verbatim from `_shared/agent_base.py` (private repo StanHus/aptraining-mesh).
+# Verbatim from `_shared/agent_base.py` (private repo).
 # Only this comment block is new. Local imports: `comms.py` (included), `bd`
 # (the private bead ledger; a labelled no-op stub `bd.py` is included so this
 # file imports standalone) and `skill_invoker` (private, imported defensively).
@@ -9,7 +9,7 @@
 # READ tick() FIRST. It is the whole contract: drain the inbox, handle four
 # universal directive kinds (heal, dream, plan, invoke_skill) or hand off to the
 # subclass, reply, keep a circuit breaker, audit every event, run the agent's own
-# idle work, dream twice a day, heartbeat. 77 lines. 56 daemons overrode only
+# idle work, dream twice a day, heartbeat. Every daemon overrode only
 # handle() and idle_cycle(). A tripped breaker keeps heartbeating so the mesh
 # doctor can tell "broken" from "dead".
 #
